@@ -1,12 +1,16 @@
 package br.com.infnet.batalha;
 
 import br.com.infnet.personagens.Personagem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
 public class CampoDeBatalha {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CampoDeBatalha.class);
     public static void Batalha(String nickname, Personagem enemyPersonagem, Personagem userPersonagem) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -60,22 +64,21 @@ public class CampoDeBatalha {
                 int dano = atacante.calcularFatorDeDano();
                 atacado.setPontosDeVida(atacado.getPontosDeVida() - dano);
 
-                System.out.println("==================================");
-                System.out.println("O " + atacante.getNome() + " causou " + dano + " de dano no " + atacado.getNome());
-                System.out.println("==================================");
-                System.out.println("Vida atual do " + atacado.getNome() + ": " + atacado.getPontosDeVida());
-                System.out.println("Vida atual do " + atacante.getNome() + ": " + atacante.getPontosDeVida());
+                LOGGER.info("\n==================================");
+                LOGGER.info("\nO " + atacante.getNome() + " causou " + dano + " de dano no " + atacado.getNome());
+                LOGGER.info("\n==================================");
+                LOGGER.info("\nVida atual do " + atacado.getNome() + ": " + atacado.getPontosDeVida());
+                LOGGER.info("\nVida atual do " + atacante.getNome() + ": " + atacante.getPontosDeVida());
 
             }
 
             if (enemyPersonagem.getPontosDeVida() <= 0) {
-                System.out
-                        .println("O " + amarelo + userPersonagem.getNome() + reset + " ganhou do " + enemyPersonagem.getNome());
+                LOGGER.info("\nO " + amarelo + userPersonagem.getNome() + reset + " ganhou do " + enemyPersonagem.getNome());
                 statusFinal = "Ganhou";
                 break;
             }
             if (userPersonagem.getPontosDeVida() <= 0) {
-                System.out.println("O " + vermehlo + enemyPersonagem.getNome() + reset + " ganhou do " + userPersonagem.getNome());
+                LOGGER.info("\nO " + vermehlo + enemyPersonagem.getNome() + reset + " ganhou do " + userPersonagem.getNome());
                 statusFinal = "Perdeu";
                 break;
             }

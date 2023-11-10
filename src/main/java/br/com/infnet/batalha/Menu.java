@@ -2,53 +2,59 @@ package br.com.infnet.batalha;
 
 import br.com.infnet.personagens.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Random;
 import java.util.Scanner;
 
-public class Menu {
-    public static void principal() {
 
+public class Menu {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Menu.class);
+    public static void principal() {
         Scanner in = new Scanner(System.in);
         Random random = new Random();
         String nickname;
         String nickPesquisa;
 
+        LOGGER.debug("Iniciando o Programa");
+
         while (true) {
 
             try {
+                LOGGER.info("\nDeseja jogar ou Exibir um relatório? \n 1 - JOGAR \n 2 - Exibir um relatório \n 3 - Sair");
 
-                System.out.println("Deseja jogar ou Exibir um relatório? \n 1 - JOGAR \n 2 - Exibir um relatório \n 3 - Sair");
                 int primeiraEscolha = in.nextInt();
 
                 if (primeiraEscolha == 1) {
 
-                    System.out.println("Você escolheu Jogar. \n Qual seu Nickname?");
+                    LOGGER.info("\nVocê escolheu Jogar. \n Qual seu Nickname?");
 
                     nickname = in.next();
 
-                    System.out.println("Qual Herói deseja ser? \n 1 - Guerreiro \n 2 - Bárbaro \n 3 - Paladino");
+                    LOGGER.info("\nQual Herói deseja ser? \n 1 - Guerreiro \n 2 - Bárbaro \n 3 - Paladino");
 
                     int userEscolha = in.nextInt();
 
-                    Personagem userPersonagem = null;
-                    Personagem enemyPersonagem = null;
+                    Personagem userPersonagem;
+                    Personagem enemyPersonagem=null;
 
                     switch (userEscolha) {
                         case 1:
-                            System.out.println("Herói Guerreiro Selecionado");
+                            LOGGER.info("\nHerói Guerreiro Selecionado");
                             userPersonagem = new Guerreiro();
                             break;
                         case 2:
-                            System.out.println("Herói Bárbaro Selecionado");
+                            LOGGER.info("\nHerói Bárbaro Selecionado");
                             userPersonagem = new Barbaro();
                             break;
                         case 3:
-                            System.out.println("Herói Paladino Selecionado");
+                            LOGGER.info("\nHerói Paladino Selecionado");
                             userPersonagem = new Paladino();
                             break;
                         default:
                             userPersonagem = new Guerreiro();
-                            System.out.println("Herói Guerreiro selecionado por padrão.");
+                            LOGGER.info("\nHerói Guerreiro selecionado por padrão.");
                             break;
                     }
 
@@ -66,25 +72,26 @@ public class Menu {
                             break;
                     }
 
-                    System.out.println("O " + userPersonagem.getNome() + " enfrentará o " + enemyPersonagem.getNome());
-                    System.out.println("Vida atual do " + userPersonagem.getNome() + ": " + userPersonagem.getPontosDeVida());
-                    System.out.println("Vida atual do " + enemyPersonagem.getNome() + ": " + enemyPersonagem.getPontosDeVida());
+                    LOGGER.info("\nO " + userPersonagem.getNome() + " enfrentará o " + enemyPersonagem.getNome());
+                    LOGGER.info("\nVida atual do " + userPersonagem.getNome() + ": " + userPersonagem.getPontosDeVida());
+                    LOGGER.info("\nVida atual do " + enemyPersonagem.getNome() + ": " + enemyPersonagem.getPontosDeVida());
 
 
                     CampoDeBatalha.Batalha(nickname, enemyPersonagem, userPersonagem);
                 }
                 if (primeiraEscolha == 2) {
-                    System.out.println("Qual nick deseja Gerar um Relatório?");
+                    LOGGER.info("\nQual nick deseja Gerar um Relatório?");
                     nickPesquisa = in.next();
                     Gravacoes.ExibirRelatorio(nickPesquisa);
                 }
                 if (primeiraEscolha == 3) {
-                    System.out.println("Obrigado por Jogar!");
+                    LOGGER.info("\nObrigado por Jogar!");
+                    LOGGER.debug("\nPrograma Finalizado.");
                     break;
                 }
 
             } catch (Exception e) {
-                System.out.println("Entrada inválida " + e);
+                LOGGER.error("Entrada inválida " + e);
                 break;
             }
         }

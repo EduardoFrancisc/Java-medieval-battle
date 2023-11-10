@@ -1,5 +1,8 @@
 package br.com.infnet.batalha;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +15,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Gravacoes {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Gravacoes.class);
     static void Logs(String nickname, List<String> dados) {
         try {
 
@@ -47,12 +51,12 @@ public class Gravacoes {
 
                 writer.println(resultado.toString());
 
-                System.out.println("Dados adicionados ao arquivo CSV.");
-                System.out.println("Aperte " + corVerde + "ENTER " + corReset + "para continuar...");
+                LOGGER.info("\nDados adicionados ao arquivo CSV.");
+                LOGGER.info("\nAperte " + corVerde + "ENTER " + corReset + "para continuar...");
                 in.nextLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao escrever no arquivo CSV: " + e.getMessage());
+            LOGGER.error("Erro ao escrever no arquivo CSV: " + e.getMessage());
         }
     }
 
@@ -122,18 +126,16 @@ public class Gravacoes {
                 }
             }
 
-            System.out.printf("QUANTAS VEZES ENFRENTOU CADA INIMIGO: \n Kobold: %d, Orc: %d, Morto-Vivo: %d", kobold,
-                    orc, mortoVivo);
-            System.out.printf("\nQUANTAS VEZES USOU CADA HERÓI: \n Bárbaro: %d  Guerreiro: %d, Paladino: %d", barbaro,
-                    guerreiro, paladino);
-            System.out.println("\n--------------------------");
-            System.out.println("Total de vitórias: " + vitorias);
-            System.out.println("Total de Pontos: " + totalDePontos);
+            LOGGER.info("\nQUANTAS VEZES ENFRENTOU CADA INIMIGO: \n Kobold: "+kobold+", Orc: "+orc+", Morto-Vivo: "+mortoVivo);
+            LOGGER.info("\nQUANTAS VEZES USOU CADA HERÓI: \n Bárbaro: "+barbaro+"  Guerreiro: "+guerreiro+", Paladino: "+paladino);
+            LOGGER.info("\n--------------------------");
+            LOGGER.info("\nTotal de vitórias: " + vitorias);
+            LOGGER.info("\nTotal de Pontos: " + totalDePontos);
 
             
 
         } catch (IOException e) {
-            System.out.println("Não foi possivel localizar esse nickname");
+            LOGGER.error("Não foi possivel localizar esse nickname " + e.getMessage());
         }
     }
 }
